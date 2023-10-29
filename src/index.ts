@@ -10,9 +10,14 @@ import { authMiddleware } from "./middleware/authMiddleware";
 
 const app = express();
 const PORT = process.env.PORT || 3000;
-app.use(cors());
+const corsOptions = {
+    origin: ["http://localhost:5173"],
+    credentials: true,
+};
 app.use(express.json());
+app.use(express.urlencoded({ extended: true }));
 app.use(cookieParser());
+app.use(cors(corsOptions));
 app.use("/api/auth", authRoutes);
 app.use(authMiddleware);
 app.use("/api/challenge", challengeRoutes);
