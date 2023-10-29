@@ -3,8 +3,9 @@ import Challenge from "../models/Challenge";
 
 export const createChallenge = async (req: Request, res: Response) => {
     try {
-        const { title, description, authorId } = req.body;
-        const challenge = await Challenge.create({ title, description, authorId });
+        const { title, description } = req.body;
+        const email = req.user?.email;
+        const challenge = await Challenge.create({ title, description, email });
         return res.status(201).json(challenge);
     } catch (error) {
         return res.status(500).json(error);
@@ -13,7 +14,7 @@ export const createChallenge = async (req: Request, res: Response) => {
 
 export const getAllAcceptedChallenges = async (req: Request, res: Response) => {
     try {
-        const challenges = (await Challenge.find()).filter((challenge) => challenge.accepted);
+        const challenges = (await Challenge.find()).filter((challenge) => challenge.accepted).sort((a, b) => b.createdAt.getTime() - a.createdAt.getTime());
         return res.status(200).json(challenges);
     } catch (error) {
         return res.status(500).json(error);

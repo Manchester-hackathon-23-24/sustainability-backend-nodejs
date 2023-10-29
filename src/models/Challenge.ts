@@ -13,8 +13,8 @@ const challengeSchema = new Schema({
         type: String,
         required: true,
     },
-    authorId: {
-        type: Schema.Types.ObjectId,
+    email: {
+        type: String,
         required: true,
     },
     accepted: {
