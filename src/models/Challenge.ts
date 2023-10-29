@@ -21,5 +21,9 @@ const challengeSchema = new Schema({
         type: Boolean,
         default: false,
     },
+    xp: {
+        type: Number,
+        default: 0,
+    },
 }, { timestamps: true });
 export default model("Challenge", challengeSchema);

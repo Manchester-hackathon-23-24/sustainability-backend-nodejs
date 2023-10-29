@@ -15,7 +15,7 @@ export const authMiddleware = async (req: Request, res: Response, next: NextFunc
 
     try {
         const decoded = jwt.verify(token, process.env.TOKEN_SECRET || "");
-        const user = await User.findById((decoded as JwtPayload)._id);
+        const user = await User.findById((decoded as JwtPayload).id);
         req.user = user as IUser;
         next();
     } catch (error) {

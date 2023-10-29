@@ -1,6 +1,7 @@
 import bcrypt from "bcrypt";
 import { Request, Response } from "express";
 import User from "../models/User";
+import Challenge from "../models/Challenge";
 import { generateJwtToken } from "../utils/generateJwtToken";
 
 export const register = async (req: Request, res: Response) => {
@@ -9,6 +10,9 @@ export const register = async (req: Request, res: Response) => {
         if (!email || !password) {
             return res.status(400).json({ message: "Missing email or password" });
         }
+        // Check if user exists
+        if (await User.findOne({ email })) return res.status(400).json({ message: "User already exists" });
+
         const passwordHash = await bcrypt.hash(password, 10);
         const user = await User.create({ email, passwordHash, role: req.body.role || "USER" });
         const token = generateJwtToken(user._id.toString(), process.env.TOKEN_SECRET!, "1d");

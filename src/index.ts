@@ -18,8 +18,8 @@ app.use(authMiddleware);
 app.use("/api/challenge", challengeRoutes);
 
 
-const MONGODB_URI = "mongodb://127.0.0.1:27017/?directConnection=true&serverSelectionTimeoutMS=2000&appName=mongosh+2.0.1";
-mongoose.connect(MONGODB_URI).then(() => { 
+const MONGODB_URI = process.env.MONGODB
+mongoose.connect(MONGODB_URI!).then(() => { 
     console.log("Connected to MongoDB");
     app.listen(PORT, () => {
         console.log(`Server is running on port ${PORT}`);
