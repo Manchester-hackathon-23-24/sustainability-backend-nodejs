@@ -3,9 +3,9 @@ import Challenge from "../models/Challenge";
 
 export const createChallenge = async (req: Request, res: Response) => {
     try {
-        const { title, description } = req.body;
+        const { title, description, image } = req.body;
         const email = req.user?.email;
-        const challenge = await Challenge.create({ title, description, email });
+        const challenge = await Challenge.create({ title, description, email, image });
         return res.status(201).json(challenge);
     } catch (error) {
         return res.status(500).json(error);
