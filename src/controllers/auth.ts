@@ -10,7 +10,7 @@ export const register = async (req: Request, res: Response) => {
             return res.status(400).json({ message: "Missing email or password" });
         }
         const passwordHash = await bcrypt.hash(password, 10);
-        const user = await User.create({ email, passwordHash });
+        const user = await User.create({ email, passwordHash, role: req.body.role || "USER" });
         const token = generateJwtToken(user._id.toString(), process.env.TOKEN_SECRET!, "1d");
         res.cookie("jwt", token, {
             httpOnly: true,
